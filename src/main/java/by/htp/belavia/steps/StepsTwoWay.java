@@ -1,9 +1,7 @@
 package by.htp.belavia.steps;
 
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +13,8 @@ import by.htp.belavia.pages.CalendarTariffsPage;
 import by.htp.belavia.pages.DayChoosePage;
 import by.htp.belavia.pages.SearchPage;
 
-public class StepsOneWay {
+public class StepsTwoWay {
+
 	private List<Order> orderList;
 	private GregorianCalendar dayDeparture;
 
@@ -29,7 +28,7 @@ public class StepsOneWay {
 
 	DayChoosePage dayChoosePage = new DayChoosePage(driver);
 
-	public StepsOneWay(List<Order> orderList) {
+	public StepsTwoWay(List<Order> orderList) {
 		super();
 		this.orderList = orderList;
 
@@ -39,9 +38,10 @@ public class StepsOneWay {
 		searchPage.openPage(url);
 		searchPage.enterPlacelaunch("Минск");
 		searchPage.EnterDestinationLocation("Рига");
-		searchPage.chooseRadioButtenOneWay();
+		searchPage.chooseDateReturn();
 		searchPage.chooseDatePlacelaunch();
-		searchPage.oneWaySubmit();
+		
+		searchPage.twoWaySubmit();
 
 	}
 
@@ -51,7 +51,7 @@ public class StepsOneWay {
 
 		calTariff.goToCalendarTariffs();
 		while (endWeak) {
-			List<WebElement> elements = calTariff.findElementsOneWayCalendar();
+			List<WebElement> elements = calTariff.findElementsTwoWayCalendar();
 
 			dayDeparture = calTariff.choiceDayOneWayCalendar(elements);
 			if (MainMenu.finishDay.equals(dayDeparture)) {
@@ -59,17 +59,19 @@ public class StepsOneWay {
 				endWeak = false;
 			}
 
-			List<WebElement> dayticketList = dayChoosePage.getClassElements();
-
+			List<WebElement> dayticketList = dayChoosePage.getClassOutFly();
+	
+			
 			for (WebElement element : dayticketList) {
 
 				String dateFly = dayChoosePage.getDepartureTime();
 
-				dayChoosePage.chooseCreateOrderOneFly(element, dayDeparture, dateFly, orderList);
+				dayChoosePage.chooseCreateOrderTwoFly(element, dayDeparture, dateFly, orderList);
 			}
 
 			calTariff.goToCalendarTariffs();
 
 		}
 	}
+	
 }

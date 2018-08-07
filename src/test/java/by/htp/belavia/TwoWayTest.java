@@ -2,7 +2,6 @@ package by.htp.belavia;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -11,9 +10,10 @@ import org.testng.annotations.Test;
 import by.htp.belavia.entitis.OrderList;
 import by.htp.belavia.menu.MainMenu;
 import by.htp.belavia.steps.StepsOneWay;
+import by.htp.belavia.steps.StepsTwoWay;
 
-public class OneWayTest {
-	private StepsOneWay stepsOneWay;
+public class TwoWayTest {
+	private StepsTwoWay stepsTwoWay;
 	String startPage="https://booking.belavia.by";
 	OrderList oneWayList;
 	
@@ -21,7 +21,7 @@ public class OneWayTest {
 	@BeforeMethod
 	public void initStep(){
 		 oneWayList=new 	OrderList();
-		 stepsOneWay=new StepsOneWay(oneWayList.getOrderList());
+		 stepsTwoWay=new StepsTwoWay(oneWayList.getOrderList());
 		 
 
 			try {
@@ -40,8 +40,8 @@ public class OneWayTest {
 	@Test
 	public void Search() {
 		
-		stepsOneWay.startSearch(startPage);	
-		stepsOneWay.CalendarTariffs();
+		stepsTwoWay.startSearch(startPage);	
+		stepsTwoWay.CalendarTariffs();
 		Assert.assertNotEquals(0, oneWayList.getOrderList().size(), "List order empty");
 	}
 }
